@@ -1,0 +1,55 @@
+{
+    "products": [
+      {
+        "id": 1,
+        "name": "AI Consulting Services",
+        "description": "Expert consultation to help businesses leverage AI technologies for strategic advantage."
+      },
+      {
+        "id": 2,
+        "name": "Custom AI Solutions",
+        "description": "Tailored AI solutions designed to address specific business needs and challenges."
+      },
+      {
+        "id": 3,
+        "name": "Data Analysis & Insights",
+        "description": "Advanced data analytics services to extract actionable insights and drive informed decision-making."
+      },
+      {
+        "id": 4,
+        "name": "Machine Learning Development",
+        "description": "Development of machine learning models to automate processes and predict outcomes."
+      },
+      {
+        "id": 5,
+        "name": "Deep Learning Solutions",
+        "description": "Cutting-edge deep learning algorithms for complex data analysis and pattern recognition."
+      },
+      {
+        "id": 6,
+        "name": "Chatbots & Virtual Assistants",
+        "description": "Creation of AI-powered chatbots and virtual assistants to enhance customer service and engagement."
+      },
+      {
+        "id": 7,
+        "name": "AI in Healthcare",
+        "description": "Application of AI technologies in healthcare for improved diagnostics, treatment planning, and patient care."
+      },
+      {
+        "id": 8,
+        "name": "AI in Finance",
+        "description": "Utilization of AI in financial services for fraud detection, risk management, and investment analysis."
+      },
+      {
+        "id": 9,
+        "name": "AI in Marketing",
+        "description": "Innovative AI solutions for personalized marketing campaigns, customer segmentation, and predictive analytics."
+      },
+      {
+        "id": 10,
+        "name": "AI for Supply Chain Optimization",
+        "description": "Optimization of supply chain operations through AI-driven forecasting, inventory management, and logistics optimization."
+      }
+    ]
+  }
+  

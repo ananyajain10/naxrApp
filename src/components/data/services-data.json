@@ -1,0 +1,35 @@
+{
+    "services": [
+      {
+        "id": 1,
+        "category": "AI SOFTWARE DEVELOPMENT",
+        "description": "AI Consulting, Custom AI solutions, Data analysis & Insights, Machine Learning, Deep Learning, Chatbots, Virtual Assistants, AI in Healthcare, Finance, Marketing, AI for Supply Chain Optimization"
+      },
+      {
+        "id": 2,
+        "category": "SOFTWARE DEVELOPMENT",
+        "description": "Web Development, Mobile App Development, UI/UX Design, Cloud Services, E-commerce Solutions, Blockchain Development"
+      },
+      {
+        "id": 3,
+        "category": "BUSINESS PLANNING & DEVELOPMENT",
+        "description": "Market Research, Partnerships, Sales & Marketing, Product or Service Expansion, Business Plan Creation, Budgeting, Risk Management"
+      },
+      {
+        "id": 4,
+        "category": "WEBSITE DESIGNING",
+        "description": "Layout, Color schemes, Typography, Graphics, User interface design, User experience design"
+      },
+      {
+        "id": 5,
+        "category": "Brand Identity",
+        "description": "Creating a distinctive image, Shaping customer perception, Aligning with company values and mission"
+      },
+      {
+        "id": 6,
+        "category": "APP DEVELOPMENT",
+        "description": "Software applications for mobile devices and desktops, Programming languages like Java, Kotlin, Swift, Objective-C, JavaScript, Testing including functional, usability, and performance testing"
+      }
+    ]
+  }
+  
