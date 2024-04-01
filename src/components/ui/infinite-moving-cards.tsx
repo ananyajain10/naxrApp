@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/components/utils/cn";
+import { animate } from "framer-motion";
 import React, { useEffect, useState } from "react";
 
 export const InfiniteMovingCards = ({
@@ -23,10 +24,9 @@ export const InfiniteMovingCards = ({
   const containerRef = React.useRef<HTMLDivElement>(null);
   const scrollerRef = React.useRef<HTMLUListElement>(null);
 
-  useEffect(() => {
-    addAnimation();
-  }, []);
+  
   const [start, setStart] = useState(false);
+  useEffect(() => {
   function addAnimation() {
     if (containerRef.current && scrollerRef.current) {
       const scrollerContent = Array.from(scrollerRef.current.children);
@@ -43,6 +43,11 @@ export const InfiniteMovingCards = ({
       setStart(true);
     }
   }
+  
+  addAnimation();
+});
+
+  
   const getDirection = () => {
     if (containerRef.current) {
       if (direction === "left") {
