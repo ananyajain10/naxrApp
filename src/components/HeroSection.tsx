@@ -3,20 +3,21 @@ import Link from "next/link"
 import React from "react";
 import { cn } from "@/components/utils/cn";
 import { Button } from "@/components/ui/moving-border";
-import { Spotlight } from "@/components/ui/Spotlight";
+import { Meteors } from "@/components/ui/meteors";
+import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
+
+const words = `Our mission is to fuel business growth through technology.` ;
+
 function HeroSection() {
   return (
     <div
     className="h-auto md:h-[40rem] w-full rounded-md flex flex-col items-center justify-center relative overflow-hidden mx-auto py-10 md:py-0"
     >
-          <Spotlight
-        className="-top-40 left-0 md:left-60 md:-top-20 sm:left-40 sm:-top-10 "
-        fill="white"
-      />
+         
         <div className="p-4 relative z-10 w-full text-center">
        
 
-
+        <Meteors number={20} />
       
             <h1
             className="mt-20 md:mt-0 text-4xl md:text-7xl font-bold
@@ -27,9 +28,7 @@ function HeroSection() {
             <p
             className="mt-4 font-normal text-base md:text-lg text-neutral-300
             max-w-lg mx-auto"
-            >our mission is to fuel business growth through technology.
-                 We believe in harnessing the power of artificial intelligence to drive innovation, 
-                streamline operations, and enhance customer experiences.
+            > <TextGenerateEffect words={words} />
                 <div className="mt-4">
                     <Link href={"/product"}>
                     <Button
@@ -38,6 +37,7 @@ function HeroSection() {
       >
         Explore Product
       </Button>
+      <Meteors number={20} />
                     </Link>
                 </div>
             </p>
