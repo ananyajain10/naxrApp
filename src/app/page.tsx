@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
 import Services from "@/components/Services";
 import TestimonialCard from "@/components/TestimonialCard";
@@ -9,6 +10,7 @@ export default function Home() {
         <HeroSection/>
         <Services/>
         <TestimonialCard/>
+        <Footer/>
     </main>
   );
 }
