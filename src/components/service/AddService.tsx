@@ -1,4 +1,4 @@
-import { createService } from "@/app/redux/actions/serviceSlice";
+import { createService } from "../../redux/actions/serviceSlice";
 import { useState, useRef } from "react";
 import { useDispatch,  useSelector, Provider  } from "react-redux";
 import { ToastContainer, toast } from 'react-toastify';
