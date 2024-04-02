@@ -6,7 +6,9 @@ import Link from "next/link";
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation'
 import { logoutAdmin } from '../redux/actions/authSlice'
-import { useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector, Provider } from 'react-redux';
+import store from '../redux/store'
+import { ToastContainer, toast } from 'react-toastify';
 
 function Navbar({ className }: { className?: string }) {
   
@@ -29,6 +31,7 @@ function Navbar({ className }: { className?: string }) {
     <div
       className={cn("fixed top-10 inset-x-0 max-w-2xl mx-auto z-50", className)}
     >
+      <ToastContainer />
       <Menu setActive={setActive}>
         <Link href={"/"}>
           <MenuItem
@@ -85,4 +88,12 @@ function Navbar({ className }: { className?: string }) {
   );
 }
 
-export default Navbar;
+ const NavigationBar = () => (
+  <Provider store={store}>
+   <Navbar />
+  </Provider>
+)
+
+export default NavigationBar;
+
+
