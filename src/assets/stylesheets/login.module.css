@@ -1,0 +1,18 @@
+
+.login_container {
+  /* background-image: url('../images/login-home.jpg'); */
+
+  height: 100vh;
+}
+
+.form_title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #c07c7c;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.login_form {
+  box-shadow: rgba(147, 144, 144, 0.25) 0 54px 55px, rgba(127, 115, 115, 0.12) 0 -12px 30px, rgba(208, 203, 203, 0.12) 0 4px 6px, rgba(157, 147, 147, 0.17) 0 12px 13px, rgba(201, 186, 186, 0.09) 0 -3px 5px;
+}
