@@ -11,7 +11,6 @@ import AddService from '../../src/components/service/AddService'
 
 const Dashboard = () => {
 
-   
     const [displayServices, setDisplayServices] = useState(true);
     const [addService, setAddService] = useState(true);
 
