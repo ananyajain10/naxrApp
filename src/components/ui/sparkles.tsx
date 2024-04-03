@@ -36,7 +36,7 @@ export const SparklesCore = (props: ParticlesProps) => {
     }).then(() => {
       setInit(true);
     });
-  }, []);
+  });
   const controls = useAnimation();
 
   const particlesLoaded = async (container?: Container) => {

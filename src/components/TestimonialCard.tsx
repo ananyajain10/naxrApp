@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { InfiniteMovingCards } from "../components/ui/infinite-moving-cards";
 import testimonialData from "@/components/data/testimonial-data.json";
 import { SparklesCore } from "../components/ui/sparkles";
