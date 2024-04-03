@@ -8,9 +8,31 @@ const BASE_URL = 'http://127.0.0.1:3000/admins';
 
 export const loginAdmin = createAsyncThunk(
     'auth/loginAdmin',
-    async (admin) => {
-        const response = await axios.post(`${BASE_URL}/sign_in`, admin)
-        return response.data
+    async (admin: Admin) => { // Type the user parameter
+        const adminObject = {
+            admin: {
+                email: admin.email,
+                password: admin.password,
+                
+            }
+        };
+
+        const response = await fetch(`${BASE_URL}/sign_in`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(adminObject)
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to login Admin');
+        }
+        console.log(response.headers.get('Authorization'))
+         await Cookies.set('admin_token', response.headers.get('Authorization'), { expires: 1 })
+
+        const data = await response.json();
+        return data;
     }
 )
 

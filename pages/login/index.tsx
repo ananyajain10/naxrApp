@@ -32,6 +32,7 @@ const Login = () => {
           
         const response = await dispatch(loginAdmin({ email, password }));
           // Assuming userInfo is part of the response object
+          console.log(response, `${email},${password}`)
         if (response.error) {
           toast.error('Invalid email or password');
         } else {
