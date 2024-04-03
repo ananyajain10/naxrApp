@@ -79,7 +79,7 @@ export const Illustration = ({ mouseEnter }: { mouseEnter: boolean }) => {
     }, 3000);
 
     return () => clearInterval(interval);
-  }, []);
+  });
 
   return (
     <div
