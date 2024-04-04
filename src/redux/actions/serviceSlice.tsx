@@ -27,29 +27,23 @@ export const fetchServices = createAsyncThunk(
 
 export const createService = createAsyncThunk(
     'service/createService',
-    async (service: Service) => {
+    async (formData: FormData) => {
+        console.log(formData);
 
-        const serviceObject = {
-            service: {
-                name: service.name,
-                description: service.description,
-                icon: service.icon,
-                duration: Number(service.duration),
-                vacancy: Number(service.vacancy)
-            }
+        try {
+            const response = await fetch(`${BASE_URL}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': Cookies.get('admin_token')
+                },
+                body: formData
+            })
+            const data = await response.json();
+            console.log(data)
+            return data
+        } catch (error) {
+            throw new Error('Error adding service: ' + error);
         }
-
-        const response = await fetch(`${BASE_URL}`, {
-            method: 'Post',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': Cookies.get('admin_token')
-            },
-            body: JSON.stringify(serviceObject)
-        })
-        const data = await response.json();
-        console.log(data)
-        return data
     }
 )
 
@@ -108,7 +102,7 @@ export const serviceSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-             .addCase(fetchServices.pending, (state) => {
+            .addCase(fetchServices.pending, (state) => {
                 state.loading = true
                 state.status = 'loading'
             })
@@ -143,7 +137,7 @@ export const serviceSlice = createSlice({
             .addCase(deleteService.fulfilled, (state, action) => {
                 state.loading = false
                 state.status = 'succeeded'
-                state.services = state.services.filter((service) => service.id !== action.payload )
+                state.services = state.services.filter((service) => service.id !== action.payload)
             })
             .addCase(deleteService.rejected, (state, action) => {
                 state.loading = false

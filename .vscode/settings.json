@@ -1,0 +1,9 @@
+{
+    "github.copilot.advanced": {
+
+    },
+    "github.copilot.enable": {
+        "javascript": "true",
+        "typescript": "true"
+    }
+}
