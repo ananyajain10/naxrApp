@@ -11,23 +11,18 @@ import Image from "next/image";
 import homebg from '../../src/assets/logo2.png'
 import AddService from '../../src/components/service/AddService'
 import 'react-toastify/dist/ReactToastify.css';
-// import AboutUs from '../../src/components/AboutUs';
-// import Services from '../../src/components/Services';
-// import Careers from '../../src/components/Careers';
-// import Applications from '../../src/components/Applications';
-// import Product from '../../src/components/Product';
-// import Layout from '../../src/components/Layout';
+import ServiceList from "@/components/service/ServiceList";
 
 const Dashboard = () => {
     const [currentPage, setCurrentPage] = useState('AboutUs');
-    const [addService, setAddService] = useState(true);
+    const [addService, setAddService] = useState(false);
 
     const renderPage = () => {
         switch (currentPage) {
             case 'AboutUs':
                 return <div>About us</div>;
             case 'Services':
-                return <div>Services</div>;
+                return <><div>Services</div><div><ServiceList /> </div></>  ;
             case 'Careers':
                 return <div>Careers</div>;
             case 'Applications':
@@ -70,7 +65,7 @@ const Dashboard = () => {
                         <span> Contents </span>
                         <div className='w-full '>
                             <span className='flex m-3 items-center gap-2' onClick={() => setCurrentPage('AboutUs')}><FaInfoCircle /> <p>About us</p></span>
-                            <span className='flex m-3 items-center gap-2' onClick={() => setCurrentPage('Services')}><MdMiscellaneousServices /> <p>Services</p></span>
+                            <span className='flex m-3 items-center gap-2' onClick={() => setCurrentPage('Services')}><MdMiscellaneousServices /> <p>Services </p></span>
                             <span className='flex m-3 items-center gap-2' onClick={() => setCurrentPage('Careers')}><IoPeople /> <p>Career</p></span>
                             <span className='flex m-3 items-center gap-2' onClick={() => setCurrentPage('Applications')}><GrNotes /> <p>Applications</p></span>
                             <span className='flex m-3 items-center gap-2' onClick={() => setCurrentPage('Product')}><MdOutlineProductionQuantityLimits /> <p>Product</p></span>
