@@ -47,7 +47,6 @@ export const createService = createAsyncThunk(
     }
 )
 
-
 export const deleteService = createAsyncThunk(
     'service/deleteService',
     async (serviceId) => {
@@ -64,23 +63,15 @@ export const deleteService = createAsyncThunk(
 
 export const updateService = createAsyncThunk(
     'service/updateService',
-    async (service: Service, serviceId) => {
-        const serviceObject = {
-            service: {
-                name: service.name,
-                description: service.description,
-                icon: service.icon,
-                duration: service.duration,
-                vacancy: service.vacancy
-            }
-        }
-        const response = await fetch(`${BASE_URL}/${serviceId}`, {
-            method: 'Put',
+    async ({ formData, id }: { formData: FormData; id: string }, { getState }) => {
+       
+        console.log(id, formData)
+        const response = await fetch(`${BASE_URL}/${id}`, {
+            method: 'PUT',
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': Cookies.get('admin_token')
             },
-            body: JSON.stringify(serviceObject)
+            body: formData
         })
         const data = await response.json();
         console.log(data)
@@ -105,16 +96,19 @@ export const serviceSlice = createSlice({
             .addCase(fetchServices.pending, (state) => {
                 state.loading = true
                 state.status = 'loading'
+                console.log("fetching")
             })
             .addCase(fetchServices.fulfilled, (state, action) => {
                 state.loading = false
                 state.status = 'succeeded'
                 state.services = action.payload
+                console.log("done fetching")
             })
             .addCase(fetchServices.rejected, (state, action) => {
                 state.loading = false
                 state.status = 'failed'
                 state.error = action.error.message
+                console.log("failed fetching")
             })
             .addCase(createService.pending, (state) => {
                 state.loading = true
@@ -137,7 +131,7 @@ export const serviceSlice = createSlice({
             .addCase(deleteService.fulfilled, (state, action) => {
                 state.loading = false
                 state.status = 'succeeded'
-                state.services = state.services.filter((service) => service.id !== action.payload)
+                state.services = state.services.filter((service) => service.attributes.id !== action.payload)
             })
             .addCase(deleteService.rejected, (state, action) => {
                 state.loading = false
@@ -146,6 +140,5 @@ export const serviceSlice = createSlice({
             })
     }
 })
-
 
 export default serviceSlice.reducer;
