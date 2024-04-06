@@ -154,7 +154,7 @@ const ApplicationForm: React.FC = () => {
                 toast.success('Submitted successfully');
                 setSubmitted(true)
             }
-
+            
         }
         // setFormValues({
         //     name: '',
