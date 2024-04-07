@@ -31,12 +31,12 @@ interface FormValues {
 
 const SubmissionSuccess: React.FC = () => {
     return (
-        <div className="p-5 min-h-screen flex flex-col justify-center items-center">
+        <div className="p-5 min-h-screen z-100 flex flex-col justify-center items-center">
           <div className="flex flex-col items-center justify-center mb-6">
             <FaRegCheckCircle className="h-60 w-60 text-green-500" />
             <h1 className="text-2xl text-center font-bold">Application Submitted Successfully!</h1>
           </div>
-          <p className="text-lg text-gray-700 mb-8">Thank you for submitting your application. We'll review it and get back to you as soon as possible.</p>
+          <p className="text-lg text-gray-700 mb-8">Thank you for submitting your application. We&apos;ll review it and get back to you as soon as possible.</p>
           <Link href="/">
             <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 ease-in-out">Back to Home</button>
           </Link>
@@ -48,7 +48,6 @@ const ApplicationForm: React.FC = () => {
 
     const dispatch = useDispatch();
 
-    // const status = useSelector((state) => state.application.status.message);
     const loading = useSelector((state) => state.application.loading);
     const [submitted, setSubmitted] = useState(false)
 
@@ -144,36 +143,22 @@ const ApplicationForm: React.FC = () => {
             formData.append('application[resume]', formValues.resume);
             }
 
-            toast.success(`Sending your Submission`);
-
             const response = await dispatch(createApplication(formData));
 
             if (response.error) {
-                toast.error('Invalid email or password');
+                toast.error('Form not submitted');
             } else {
-                toast.success('Submitted successfully');
                 setSubmitted(true)
             }
             
         }
-        // setFormValues({
-        //     name: '',
-        //     email: '',
-        //     phone: '',
-        //     institute: '',
-        //     course: '',
-        //     domain: '',
-        //     goals: '',
-        //     unique_skill: '',
-        //     company_project: '',
-        //     resume: null,
-        // });
     };
 
     return (
         <>
+            <ToastContainer />
             <main>
-                <ToastContainer />
+                
                 {submitted && <SubmissionSuccess />}
                 {loading ? (
                     <div className='flex flex-col absolute w-full h-full bg-white justify-center items-center'>
@@ -187,14 +172,13 @@ const ApplicationForm: React.FC = () => {
                             <Image
                                 src={Join}
                                 alt="Join us banner"
-                                width={500}
                                 height={300}
-                                className="sm:block md:block lg:hidden xl:hidden"
+                                width={500}
+                                className="sm:block md:block lg:hidden xl:hidden m-auto"
                             />
                             <Image
                                 src={Meet}
                                 alt="Join us banner"
-                               
                                 className="sm:hidden md:hidden lg:block xl:block"
                             />
                             <form id="registration-form" className="w-90  md:w-3/4 lg:[70.666667%] xl:[70.666667%] mx-2 flex md:m-auto flex-col pt-4 mt-4 p-4 rounded-lg bg-gray-200 shadow-lg lg:relative lg:grid lg:grid-cols-2 lg:gap-4 lg:pt-16 lg:ml-auto" onSubmit={handleSubmit}>
