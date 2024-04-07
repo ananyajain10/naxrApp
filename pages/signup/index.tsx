@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useRef } from 'react'
 import { FidgetSpinner } from 'react-loader-spinner';
-// import style from '../../../../assets/stylesheets/signup.module.css';
+import Meet from '../../src/assets/images/meet.jpg';
 import { useDispatch, useSelector, Provider } from 'react-redux';
 import { registerAdmin } from '../../src/redux/actions/authSlice';
 import { ToastContainer, toast } from 'react-toastify';
@@ -9,7 +9,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import store from '../../src/redux/store';
 import { useRouter } from 'next/router';
 import '../../src/app/globals.css';
+import Navbar from "@/components/Navbar";
 import Link from 'next/link';
+import Image from 'next/image';
 
 const SignUp = () => {
 
@@ -134,6 +136,8 @@ const SignUp = () => {
 
         return (
             <>
+                
+                {loading ? <></> : <Navbar />}
 
                 {loading && (
                     <div className='flex flex-col absolute w-full h-full bg-white justify-center items-center'>
@@ -141,10 +145,21 @@ const SignUp = () => {
                         <h4 className='font-bold'>Signing up</h4>
                     </div>
                 )}
-                <div className={`text p-4 flex p-5 flex-col justify-center h-[100vh] md:ml-inherit md:w-[50%] lg:w-[35%] ml-auto`}>
+                <div className={` p-4 flex p-5 flex-row justify-center h-[100vh] w-full `}>
+
+                <div className="hidden lg:block xl:block">
+                <Image
+                        src={Meet}
+                        width={800}
+                        height={700}
+                        alt='Admin meeting'
+                        className="mt-[100px] ml-[50px]"
+                        />
+                </div>
+                    
 
                     <ToastContainer />
-                    <form className="text-sm p-5 flex flex-col lg:w-full space-y-4 shadow-2xl lg:align-right" ref={formRef} onSubmit={(e) => handleSubmit(e)}>
+                    <form className="text-sm p-5 flex flex-col lg:w-[30%] w-full space-y-4 md:ml-inherit md:w-[50%] ml-auto shadow-2xl mt-[40px] lg:align-right" ref={formRef} onSubmit={(e) => handleSubmit(e)}>
 
                         <h1 className={` text-center text-3xl font-bold `}>Sign Up</h1>
                         <label htmlFor='first_name'>
@@ -226,9 +241,10 @@ const SignUp = () => {
                             type="submit"
                             value="Submit"
                         />
+                        <p className="text-center sm:w-full ] md:ml-auto mt-3 ">Already have an account? <Link href="/login" className="text-blue-500 w-full">Login</Link></p>
                     </form>
 
-                    <p className="text-center w-full mt-3">Already have an account? <Link href="/login" className="text-blue-500">Login</Link></p>
+                    
 
                 </div>
             </>
