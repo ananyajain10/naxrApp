@@ -1,4 +1,4 @@
-import { createService } from "../../redux/actions/serviceSlice";
+import { createService, fetchServices } from "../../redux/actions/serviceSlice";
 import { useState, useRef, FormEvent, ChangeEvent } from "react";
 import { useDispatch,  useSelector, Provider  } from "react-redux";
 import { ToastContainer, toast } from 'react-toastify';
@@ -54,6 +54,8 @@ const AddService = () => {
             console.log(formData)
             try {
                 const response = await dispatch(createService(formData));
+                await dispatch(fetchServices(formData));
+
                 console.log(response);
                 toast.success('Service added successfully');
             } catch (error) {

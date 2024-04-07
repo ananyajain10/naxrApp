@@ -1,7 +1,7 @@
 import { useDispatch, useSelector, Provider } from "react-redux";
 import { fetchServices, deleteService, updateService } from "../../redux/actions/serviceSlice";
 import store from '../../redux/store';
-import { useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -24,7 +24,7 @@ const ServiceUpdateForm = ({ service }) => {
         }
     }
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
         console.log(updatedService);
 
@@ -60,30 +60,40 @@ const ServiceUpdateForm = ({ service }) => {
     }
 
     return (
-        <form ref={formRef} onSubmit={handleSubmit} className='flex flex-col gap-4'>
-            <label htmlFor="name">Name</label>
-            <input type="text" name="name" value={updatedService.name} onChange={(e) => setUpdatedService({ ...updatedService, name: e.target.value })} />
-            <span id="service_name-error" className="text-red-500"></span>
+        <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-6 max-w-lg mx-auto">
+    <div className="flex flex-col">
+        <label htmlFor="name" className="text-lg font-semibold mb-1">Name</label>
+        <input type="text" name="name" value={updatedService.name} onChange={(e) => setUpdatedService({ ...updatedService, name: e.target.value })} className="border rounded-md py-2 px-3 text-lg focus:outline-none focus:border-blue-500" />
+        <span id="service_name-error" className="text-red-500"></span>
+    </div>
 
-            <label htmlFor="duration">Duration</label>
-            <input type="number" name="duration" value={updatedService.duration} onChange={(e) => setUpdatedService
-                ({ ...updatedService, duration: parseInt(e.target.value) })} />
-            <span id="service_duration-error" className="text-red-500"></span>
+    <div className="flex flex-col">
+        <label htmlFor="duration" className="text-lg font-semibold mb-1">Duration</label>
+        <input type="number" name="duration" value={updatedService.duration} onChange={(e) => setUpdatedService({ ...updatedService, duration: parseInt(e.target.value) })} className="border rounded-md py-2 px-3 text-lg focus:outline-none focus:border-blue-500" />
+        <span id="service_duration-error" className="text-red-500"></span>
+    </div>
 
-            <label htmlFor="description">Description</label>
-            <textarea name="description" value={updatedService.description} onChange={(e) => setUpdatedService({ ...updatedService, description: e.target.value })} />
-            <span id="service_description-error" className="text-red-500"></span>
+    <div className="flex flex-col">
+        <label htmlFor="description" className="text-lg font-semibold mb-1">Description</label>
+        <textarea name="description" value={updatedService.description} onChange={(e) => setUpdatedService({ ...updatedService, description: e.target.value })} className="border rounded-md py-2 px-3 text-lg h-24 focus:outline-none focus:border-blue-500"></textarea>
+        <span id="service_description-error" className="text-red-500"></span>
+    </div>
 
-            <label htmlFor="vacancy">Vacancy</label>
-            <input type="number" name="vacancy" value={updatedService.vacancy} onChange={(e) => setUpdatedService({ ...updatedService, vacancy: parseInt(e.target.value) })} />
-            <span id="service_vacancy-error" className="text-red-500"></span>
+    <div className="flex flex-col">
+        <label htmlFor="vacancy" className="text-lg font-semibold mb-1">Vacancy</label>
+        <input type="number" name="vacancy" value={updatedService.vacancy} onChange={(e) => setUpdatedService({ ...updatedService, vacancy: parseInt(e.target.value) })} className="border rounded-md py-2 px-3 text-lg focus:outline-none focus:border-blue-500" />
+        <span id="service_vacancy-error" className="text-red-500"></span>
+    </div>
 
-            <label htmlFor="icon">Icon</label>
-            <input type="file" name="icon" onChange={handleFileChange} />
-            <span id="service_icon-error" className="text-red-500"></span>
+    <div className="flex flex-col">
+        <label htmlFor="icon" className="text-lg font-semibold mb-1">Icon</label>
+        <input type="file" name="icon" onChange={handleFileChange} className="py-2 px-3 text-lg" />
+        <span id="service_icon-error" className="text-red-500"></span>
+    </div>
 
-            <button type="submit">Update</button>
-        </form>
+    <button type="submit" className="bg-blue-500 text-white py-3 rounded-md text-lg font-semibold hover:bg-blue-600 transition duration-300 ease-in-out">Update</button>
+</form>
+
     )
 
 }
@@ -102,7 +112,7 @@ const Services = () => {
 
     console.log(status);
 
-    
+
     const [showUpdateForm, setShowUpdateForm] = useState(false);
     const [serviceToUpdate, setServiceToUpdate] = useState(null);
 
@@ -111,6 +121,7 @@ const Services = () => {
     const handleDelete = async (id) => {
         try {
             await dispatch(deleteService(id));
+            toast.success('Service deleted successfully');
         } catch (error) {
             console.error('Error deleting service:', error);
         }
@@ -123,26 +134,34 @@ const Services = () => {
 
     return (
         <>
-         <ToastContainer />
+            <ToastContainer />
             {showUpdateForm && <ServiceUpdateForm service={serviceToUpdate} />}
             {
                 loading ? <div> Loading...</div> : services.map((service) => (
-                    <div key={service.attributes.id + service.attributes.name} className='flex gap-4'>
-                        <div>
-                            <img src={service.attributes.image_url} alt={service.attributes.name} className="w-20 h-20" />
+                    <div key={service.attributes.id + service.attributes.name} className='flex gap-4 rounded-lg shadow-lg m-2'>
+                        <div className="flex items-center m-2">
+                            <div className="mr-4">
+                                <img src={service.attributes.image_url} alt={service.attributes.name} class="w-20 h-20 rounded-full shadow-lg" />
+                            </div>
+                            <div>
+                                <h1 className="text-2xl font-bold text-gray-800 mb-2">{service.attributes.name}</h1>
+                                <p className="text-gray-600 mb-4">{service.attributes.description}</p>
+                                <div className="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM5 10a5 5 0 1110 0 5 5 0 01-10 0z" clip-rule="evenodd" />
+                                    </svg>
+
+                                    <span className="text-sm text-gray-500 mr-4">{service.attributes.duration} months</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM5 10a5 5 0 1110 0 5 5 0 01-10 0z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span className="text-sm text-gray-500 mr-4">{service.attributes.vacancy} slots left</span>
+                                    <button type="button" onClick={() => handleUpdate(service)} className="text-sm text-white bg-blue-500 hover:bg-blue-600 rounded-full px-4 py-2">Edit</button>
+                                    <button type="button" onClick={() => handleDelete(service.attributes.id)} className="text-sm text-white bg-red-500 hover:bg-red-600 rounded-full px-4 py-2 ml-2">Delete</button>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <h1>{service.attributes.name}</h1>
-                            <p>{service.attributes.description}</p>
-                            <span>{service.attributes.duration}</span>
-                            <span>{service.attributes.vacancy}</span>
-                            <span>
-                                <button type="button" onClick={() => handleUpdate(service)}>Edit</button>
-                            </span>
-                            <span>
-                                <button type="button" onClick={() => handleDelete(service.attributes.id)}>Delete</button>
-                            </span>
-                        </div>
+
                     </div>
                 ))
             }
