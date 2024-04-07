@@ -39,7 +39,7 @@ function Navbar({ className }: { className?: string }) {
       </div>
   )}
     <div
-      className={cn("fixed top-10 inset-x-0 max-w-5xl mx-auto z-50 flex flex-row justify-between", className)}
+      className={cn("fixed top-4 inset-x-0 max-w-5xl w-[55%] mx-left z-50 flex flex-row justify-around items-center", className)}
     >
       <ToastContainer />
 <div>
@@ -82,12 +82,20 @@ function Navbar({ className }: { className?: string }) {
           >Contact Us</MenuItem>
             </Link>
 
+            <Link href={"/apply"}>
+            <MenuItem
+            setActive={setActive}
+            active={active}
+            item="Join Us"
+          >Join Us</MenuItem>
+            </Link>
+
             <MenuItem setActive={setActive} active={active} item="Profile">
             <div className="flex flex-col space-y-4 text-sm">
             {loggedIn ? (
               <>
                 <HoveredLink href="" onClick={(e) => handleLogout(e)}>Log out</HoveredLink>
-                <HoveredLink href="/dasboard">Dashboard</HoveredLink>
+                <HoveredLink href="/dashboard">Dashboard</HoveredLink>
               </>
             ) : (
               <>
