@@ -52,7 +52,7 @@ export const createApplication = createAsyncThunk(
 export const deleteApplication = createAsyncThunk(
     'application/deleteApplication',
     async (applicationId) => {
-        const response = await fetch(`http://localhost:3000/api/v1/applications/${serviceId}`, {
+        const response = await fetch(`http://localhost:3000/api/v1/applications/${applicationId}`, {
             method: 'DELETE',
         });
 
@@ -115,6 +115,7 @@ export const applicationSlice = createSlice({
             .addCase(deleteApplication.fulfilled, (state, action) => {
                 state.loading = false
                 state.status = 'succeeded'
+                console.log(action.payload);
                 state.applications = state.applications.filter((application) => application.attributes.id !== action.payload)
             })
             .addCase(deleteApplication.rejected, (state, action) => {
