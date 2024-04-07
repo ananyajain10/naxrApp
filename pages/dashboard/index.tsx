@@ -1,46 +1,74 @@
-// 
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaInfoCircle } from "react-icons/fa";
+import { useRouter } from 'next/router';
 import { MdMiscellaneousServices, MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { IoPeople } from "react-icons/io5";
 import { GrNotes } from "react-icons/gr";
 import { RiLayout6Line } from "react-icons/ri";
+import Cookies from 'js-cookie';
 import '../../src/app/globals.css';
 import Image from "next/image";
-import homebg from '../../src/assets/logo2.png'
-import AddService from '../../src/components/service/AddService'
+import homebg from '../../src/assets/logo2.png';
+import AddService from '../../src/components/service/AddService';
 import 'react-toastify/dist/ReactToastify.css';
+import { logoutAdmin } from '../../src/redux/actions/authSlice';
 import ServiceList from "@/components/service/ServiceList";
+import ApplicationList from "@/components/application/ApplicationList";
+import { useDispatch, Provider } from "react-redux";
+import store from '../../src/redux/store';
 
-const Dashboard = () => {
-    const [currentPage, setCurrentPage] = useState('AboutUs');
+const Board = () => {
+    const [currentPage, setCurrentPage] = useState('Applications');
     const [addService, setAddService] = useState(false);
+    const loggedIn = Cookies.get('admin_token');
+    const dispatch = useDispatch();
 
     const renderPage = () => {
         switch (currentPage) {
-            case 'AboutUs':
-                return <div>About us</div>;
-            case 'Services':
-                return <><div>Services</div><div><ServiceList /> </div></>  ;
-            case 'Careers':
-                return <div>Careers</div>;
             case 'Applications':
-                return <div>Applications</div>;
+                return <><div ><ApplicationList /></div></>;
+            case 'Services':
+                return <><div className="text-center text-2xl font-bold m-2">Services</div><div> <button
+                    type="button"
+                    onClick={() => setAddService(!addService)}
+                    className="bg-[#dddddd] p-2 rounded-md m-2"
+                >
+                    Add Service
+                </button><ServiceList /></div></>;
+            case 'AboutUs':
+                return <div className="text-center text-2xl font-bold m-2">About us</div>;
+            case 'Careers':
+                return <div className="text-center text-2xl font-bold m-2">Careers</div>;
             case 'Product':
-                return <div>Product</div>;
+                return <div className="text-center text-2xl font-bold m-2">Product</div>;
             case 'Layout':
-                return <div>Layout</div>;
+                return <div className="text-center text-2xl font-bold m-2">Layout</div>;
             default:
                 return null;
         }
     };
 
+    const router = useRouter();
+
+    useEffect(() => {
+        if (!loggedIn) {
+            router.push('/not_found');
+        }
+    }, [loggedIn]);
+
+    const handleLogout = (e) => {
+        e.stopPropagation();
+        dispatch(logoutAdmin());
+        setTimeout(() => {
+            router.push('/');
+        }, 1000);
+    };
+
     return (
         <>
-            <main className='flex'>
-                <section className="bg-[#dddddd] h-[100vh] w-[200px] p-4">
-                    <span className='flex w-full items-center gap-2'>
+            <main className="flex h-screen">
+                <section className="bg-[#dddddd] w-[200px] p-4 fixed left-0 top-0">
+                    <span className="flex w-full items-center gap-2">
                         <Image
                             src={homebg}
                             alt="homebg"
@@ -50,7 +78,8 @@ const Dashboard = () => {
                         />
                         <h1 className="mx-4">Tech-Dice</h1>
                     </span>
-                    <span className='flex w-full items-center gap-2'>
+                    <br />
+                    <span className="flex w-full items-center gap-2">
                         <Image
                             src={homebg}
                             alt="homebg"
@@ -61,36 +90,82 @@ const Dashboard = () => {
                         <h1 className="">Daniel Ochuba</h1>
                     </span>
 
-                    <div className='w-full text-left mt-[110px]'>
-                        <span> Contents </span>
-                        <div className='w-full '>
-                            <span className='flex m-3 items-center gap-2' onClick={() => setCurrentPage('AboutUs')}><FaInfoCircle /> <p>About us</p></span>
-                            <span className='flex m-3 items-center gap-2' onClick={() => setCurrentPage('Services')}><MdMiscellaneousServices /> <p>Services </p></span>
-                            <span className='flex m-3 items-center gap-2' onClick={() => setCurrentPage('Careers')}><IoPeople /> <p>Career</p></span>
-                            <span className='flex m-3 items-center gap-2' onClick={() => setCurrentPage('Applications')}><GrNotes /> <p>Applications</p></span>
-                            <span className='flex m-3 items-center gap-2' onClick={() => setCurrentPage('Product')}><MdOutlineProductionQuantityLimits /> <p>Product</p></span>
-                            <span className='flex m-3 items-center gap-2' onClick={() => setCurrentPage('Layout')}><RiLayout6Line /> <p>Layout</p></span>
-                        </div>
-                    </div>
+                    <nav className="mt-[110px]">
+                        <span className="text-left">Contents</span>
+                        <ul className="mt-4">
+                        <li
+                                className={`flex m-3 p-2 rounded-md hover:bg-gray-200 items-center gap-2 cursor-pointer ${currentPage === 'Applications' ? 'bg-gray-500 text-white' : ''
+                                    }`}
+                                onClick={() => setCurrentPage('Applications')}
+                            >
+                                <GrNotes /> <p>Applications</p>
+                            </li>
+                            <li
+                                className={`flex m-3 p-2 rounded-md hover:bg-gray-200 items-center gap-2 cursor-pointer ${currentPage === 'Services' ? 'bg-gray-500 text-white' : ''
+                                    }`}
+                                onClick={() => setCurrentPage('Services')}
+                            >
+                                <MdMiscellaneousServices /> <p>Services </p>
+                            </li>
+                            <li
+                                className={`flex m-3 p-2 rounded-md hover:bg-gray-200 items-center gap-2 cursor-pointer ${currentPage === 'AboutUs' ? 'bg-gray-500 text-white' : ''
+                                    }`}
+                                onClick={() => setCurrentPage('AboutUs')}
+                            >
+                                <FaInfoCircle /> <p>About us</p>
+                            </li>
+                            
+                            <li
+                                className={`flex m-3 p-2 rounded-md hover:bg-gray-200 items-center gap-2 cursor-pointer ${currentPage === 'Careers' ? 'bg-gray-500 text-white' : ''
+                                    }`}
+                                onClick={() => setCurrentPage('Careers')}
+                            >
+                                <IoPeople /> <p>Career</p>
+                            </li>
+                            
+                            <li
+                                className={`flex m-3 p-2 rounded-md hover:bg-gray-200 items-center gap-2 cursor-pointer ${currentPage === 'Product' ? 'bg-gray-500 text-white' : ''
+                                    }`}
+                                onClick={() => setCurrentPage('Product')}
+                            >
+                                <MdOutlineProductionQuantityLimits /> <p>Product</p>
+                            </li>
+                            <li
+                                className={`flex m-3 p-2 rounded-md hover:bg-gray-200 items-center gap-2 cursor-pointer ${currentPage === 'Layout' ? 'bg-gray-500 text-white' : ''
+                                    }`}
+                                onClick={() => setCurrentPage('Layout')}
+                            >
+                                <RiLayout6Line /> <p>Layout</p>
+                            </li>
+                        </ul>
+                    </nav>
                 </section>
 
-                <section>
+                <section className="w-[80%] ml-[205px] h-[100vh] p-4">
                     <div>
-                        <p className='text-gray px-3'> Tech-dice Website - Admin Panel </p>
-                        <button type="button" onClick={() => setAddService(!addService)} className='bg-[#dddddd] p-2 rounded-md m-2'>Add Service</button>
-                        {addService && <AddService />
 
-                        }
+                        <div className="flex justify-between w-full bg-green-200 items-center rounded-lg">
+                            <p className="text-gray px-3"> Tech-dice Website - Admin Panel </p>
+                            <button type="button" onClick={handleLogout} className="bg-[#dddddd] p-2 rounded-md m-2">
+                                Logout
+                            </button>
+                        </div>
+                        {addService && <AddService />}
                     </div>
-                    <main className=''>
-                        {renderPage()}
-                    </main>
-
+                    <main className="">{renderPage()}</main>
                 </section>
-
             </main>
         </>
-    )
-}
+    );
+};
+
+const Dashboard = () => {
+    return (
+        <Provider store={store}>
+            <Board />
+        </Provider>
+    );
+};
 
 export default Dashboard;
+
