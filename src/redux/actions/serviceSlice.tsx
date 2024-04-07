@@ -96,19 +96,16 @@ export const serviceSlice = createSlice({
             .addCase(fetchServices.pending, (state) => {
                 state.loading = true
                 state.status = 'loading'
-                console.log("fetching")
             })
             .addCase(fetchServices.fulfilled, (state, action) => {
                 state.loading = false
                 state.status = 'succeeded'
                 state.services = action.payload
-                console.log("done fetching")
             })
             .addCase(fetchServices.rejected, (state, action) => {
                 state.loading = false
                 state.status = 'failed'
                 state.error = action.error.message
-                console.log("failed fetching")
             })
             .addCase(createService.pending, (state) => {
                 state.loading = true
@@ -117,7 +114,6 @@ export const serviceSlice = createSlice({
             .addCase(createService.fulfilled, (state, action) => {
                 state.loading = false
                 state.status = 'succeeded'
-                state.services = action.payload
             })
             .addCase(createService.rejected, (state, action) => {
                 state.loading = false
