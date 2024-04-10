@@ -67,11 +67,11 @@ const Login = () => {
                         
                         height={700}
                         alt='Admin meeting'
-                        className="w-[80%] mt-[100px] ml-[50px]"
+                        className="rounded-lg w-[80%] mt-[100px] ml-[50px]"
                         />
                 </div>
       <form
-        className="text-sm p-5 flex flex-col lg:w-[40%] lg:h-[60%] w-full space-y-4 md:ml-inherit md:w-[50%] ml-auto shadow-2xl mt-[40px] lg:align-right"
+        className="rounded-lg text-sm p-5 flex flex-col lg:w-[40%] lg:h-[60%] w-full space-y-4 md:ml-inherit md:w-[50%] ml-auto shadow-2xl mt-[40px] lg:align-right"
         onSubmit={(e) => handleSubmit(e)}
       >
          <ToastContainer />
