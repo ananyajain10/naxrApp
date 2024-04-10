@@ -153,13 +153,13 @@ const SignUp = () => {
                         width={800}
                         height={700}
                         alt='Admin meeting'
-                        className="mt-[100px] ml-[50px]"
+                        className="mt-[100px] ml-[50px] rounded-lg"
                         />
                 </div>
                     
 
                     <ToastContainer />
-                    <form className="text-sm p-5 flex flex-col lg:w-[30%] w-full space-y-4 md:ml-inherit md:w-[50%] ml-auto shadow-2xl mt-[40px] lg:align-right" ref={formRef} onSubmit={(e) => handleSubmit(e)}>
+                    <form className="rounded-lg text-sm p-5 flex flex-col lg:w-[30%] w-full space-y-4 md:ml-inherit md:w-[50%] ml-auto shadow-2xl mt-[40px] lg:align-right" ref={formRef} onSubmit={(e) => handleSubmit(e)}>
 
                         <h1 className={` text-center text-3xl font-bold `}>Sign Up</h1>
                         <label htmlFor='first_name'>
