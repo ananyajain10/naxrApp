@@ -13,7 +13,7 @@ import { FidgetSpinner } from 'react-loader-spinner';
 import { ToastContainer, toast } from 'react-toastify';
 
 function Navbar({ className }: { className?: string }) {
-  
+
   const loading = useSelector((state) => state.auth.loading);
 
   const loggedIn = Cookies.get('admin_token');
@@ -32,38 +32,38 @@ function Navbar({ className }: { className?: string }) {
   };
   return (
     <>
-     {loading && (
-      <div className='flex flex-col absolute w-full h-full bg-white justify-center items-center'>
+      {loading && (
+        <div className='flex flex-col absolute w-full h-full bg-white justify-center items-center'>
           <FidgetSpinner />
           <h4 className='font-bold'>Logging Out ...</h4>
-      </div>
-  )}
-    <div
-      className={cn("fixed top-4 inset-x-0 max-w-5xl w-[55%] mx-left z-50 flex flex-row justify-around items-center", className)}
-    >
-      <ToastContainer />
-<div>
-<Logo/>
-</div>
-      <Menu setActive={setActive}>
-        <Link href={"/"}>
-          <MenuItem
-            setActive={setActive}
-            active={active}
-            item="Home"
-          ></MenuItem>
-        </Link>
-        <Link href={"/services"}>
-          <MenuItem setActive={setActive} active={active} item="Services">
-            <div className="flex flex-col space-y-4 text-sm">
-              <HoveredLink href="/web-dev">Website Development</HoveredLink>
-              <HoveredLink href="/interface-design">
-                Interface Design
-              </HoveredLink>
-              <HoveredLink href="/seo">Search Engine Optimization</HoveredLink>
-              <HoveredLink href="/branding">Branding</HoveredLink>
-            </div>
-          </MenuItem>
+        </div>
+      )}
+      <div
+        className={cn("fixed top-4 inset-x-0 max-w-5xl w-[55%] sm:w-full mx-left z-50 flex flex-row sm:flex-row sm:m-auto justify-around items-center", className)}
+      >
+        <ToastContainer />
+
+
+        <div className="hidden md:block lg:block xl:block"><Logo /></div>
+        <Menu setActive={setActive}>
+          <Link href={"/"}>
+            <MenuItem
+              setActive={setActive}
+              active={active}
+              item="Home"
+            ></MenuItem>
+          </Link>
+          <Link href={"/services"}>
+            <MenuItem setActive={setActive} active={active} item="Services">
+              <div className="flex flex-col space-y-4 text-sm">
+                <HoveredLink href="/web-dev">Website Development</HoveredLink>
+                <HoveredLink href="/interface-design">
+                  Interface Design
+                </HoveredLink>
+                <HoveredLink href="/seo">Search Engine Optimization</HoveredLink>
+                <HoveredLink href="/branding">Branding</HoveredLink>
+              </div>
+            </MenuItem>
 
           </Link>
           {/* <Link href={"/contact"}>
@@ -73,49 +73,49 @@ function Navbar({ className }: { className?: string }) {
             item="Careers"
           >Explore Careers</MenuItem>
             </Link> */}
-         
-            <Link href={"/contact"}>
-            <MenuItem
-            setActive={setActive}
-            active={active}
-            item="Contact"
-          >Contact Us</MenuItem>
-            </Link>
 
-            <Link href={"/apply"}>
+          <Link href={"/contact"}>
             <MenuItem
-            setActive={setActive}
-            active={active}
-            item="Join Us"
-          >Join Us</MenuItem>
-            </Link>
+              setActive={setActive}
+              active={active}
+              item="Contact"
+            >Contact Us</MenuItem>
+          </Link>
 
-            <MenuItem setActive={setActive} active={active} item="Profile">
-            <div className="flex flex-col space-y-4 text-sm">
-            {loggedIn ? (
-              <>
-                <HoveredLink href="" onClick={(e) => handleLogout(e)}>Log out</HoveredLink>
-                <HoveredLink href="/dashboard">Dashboard</HoveredLink>
-              </>
-            ) : (
-              <>
-                <HoveredLink href="/login">Log In</HoveredLink>
-                <HoveredLink href="/signup">Sign up</HoveredLink>
-              </>
-            ) }
+          <Link href={"/apply"}>
+            <MenuItem
+              setActive={setActive}
+              active={active}
+              item="Join Us"
+            ></MenuItem>
+          </Link>
+
+          <MenuItem setActive={setActive} active={active} item='Profile'>
+            <div className="flex flex-col space-y-4 text-md">
+              {loggedIn ? (
+                <>
+                  <HoveredLink href="" onClick={(e) => handleLogout(e)}>Log out</HoveredLink>
+                  <HoveredLink href="/dashboard">Dashboard</HoveredLink>
+                </>
+              ) : (
+                <>
+                  <HoveredLink href="/login">Log In</HoveredLink>
+                  <HoveredLink href="/signup">Sign up</HoveredLink>
+                </>
+              )}
             </div>
           </MenuItem>
-         
-        
-      </Menu>
-    </div>
+
+
+        </Menu>
+      </div>
     </>
   );
 }
 
- const NavigationBar = () => (
+const NavigationBar = () => (
   <Provider store={store}>
-   <Navbar />
+    <Navbar />
   </Provider>
 )
 
