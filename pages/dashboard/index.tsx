@@ -66,7 +66,7 @@ const Board = () => {
 
     return (
         <>
-            <main className="flex h-screen">
+            <main className="flex">
                 <section className="bg-[#dddddd] w-[200px] p-4 fixed left-0 top-0">
                     <span className="flex w-full items-center gap-2">
                         <Image
@@ -141,9 +141,8 @@ const Board = () => {
                     </nav>
                 </section>
 
-                <section className="w-[80%] ml-[205px] h-[100vh] p-4">
+                <section className="w-[80%] ml-[205px] p-4">
                     <div>
-
                         <div className="flex justify-between w-full bg-green-200 items-center rounded-lg">
                             <p className="text-gray px-3"> Tech-dice Website - Admin Panel </p>
                             <button type="button" onClick={handleLogout} className="bg-[#dddddd] p-2 rounded-md m-2">
