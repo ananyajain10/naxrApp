@@ -119,14 +119,22 @@ const ApplicationForm: React.FC = () => {
         // Handle form submission here
         const allInputHasValue = Object.entries(formValues).every(([key, value]) => {
             const message = document.getElementById(`${key}-error`);
+            
             if (value === '' || value === null) {
-                message!.innerText = `Please Enter ${key}`;
+                if (message !== null) { // Check if message element exists
+                    message.innerText = `Please Enter ${key}`;
+                }
                 toast.error(`Please Enter ${key}`);
-                return false
+                return false;
             }
-            message!.innerText = '';
+            
+            if (message !== null) { // Clear error message if it exists
+                message.innerText = '';
+            }
+            
             return true;
         });
+        
 
         if (allInputHasValue) {
             const formData = new FormData();
@@ -158,6 +166,7 @@ const ApplicationForm: React.FC = () => {
         <>
             <ToastContainer />
             <main>
+                <Navbar />
                 
                 {submitted && <SubmissionSuccess />}
                 {loading ? (
@@ -166,8 +175,7 @@ const ApplicationForm: React.FC = () => {
                         <h4 className='font-bold'>Submitting Application ...</h4>
                     </div>) : (
                     <>
-                        <Navbar />
-                        <section>
+                        <section className="mt-[90px] sm:mt-[90px] lg:mt-[0px]">
 
                             <Image
                                 src={Join}
@@ -176,17 +184,18 @@ const ApplicationForm: React.FC = () => {
                                 width={500}
                                 className="sm:block md:block lg:hidden xl:hidden m-auto"
                             />
+                            <div className="hidden md:hidden lg:block xl:block">
                             <Image
                                 src={Meet}
                                 alt="Join us banner"
-                                className="sm:hidden md:hidden lg:block xl:block"
                             />
-                            <form id="registration-form" className="w-90  md:w-3/4 lg:[70.666667%] xl:[70.666667%] mx-2 flex md:m-auto flex-col pt-4 mt-4 p-4 rounded-lg bg-gray-200 shadow-lg lg:relative lg:grid lg:grid-cols-2 lg:gap-4 lg:pt-16 lg:ml-auto" onSubmit={handleSubmit}>
+                            </div>
+                            <form id="registration-form" className="w-90  md:w-3/4 lg:[70.666667%] xl:[70.666667%] mx-2 flex md:m-auto flex-col pt-4 sm:mt-2 p-4 rounded-lg bg-gray-200 shadow-lg lg:relative lg:grid lg:grid-cols-2 lg:gap-4 lg:pt-16 lg:ml-auto" onSubmit={handleSubmit}>
                                 <h1 className="text-2xl font-bold text-gray-700 text-center mb-4 lg:absolute lg:top-4 lg:left-1/2 lg:transform lg:-translate-x-1/2 lg:col-span-4 ">Register</h1>
 
                                 <div className="flex flex-col field mb-2">
                                     <label htmlFor="name" className="font-semibold text-base text-gray-700 lg:text-sm">Name: <span className="text-red-400">*</span></label>
-                                    <input type="text" id="name" name="name" className='w-full px-4 py-3 lg:py-1 mt-2 border border-gray-300 rounded-md' placeholder="Full name" value={formValues.name} onChange={handleChange} />
+                                    <input type="text" id="name" name="name" className='w-full px-4 py-3 lg:py-1 mt-2 border border-gray-300 rounded-md' placeholder="Full name" onChange={handleChange} />
                                     <small className="text-red-400" id='name-error'></small>
                                 </div>
 
@@ -198,25 +207,25 @@ const ApplicationForm: React.FC = () => {
 
                                 <div className="flex flex-col field mb-2">
                                     <label htmlFor="phone" className="font-semibold text-base text-gray-700 lg:text-sm">Phone: <span className="text-red-400">*</span></label>
-                                    <input type="tel" id="phone" name="phone" className='w-full px-4 py-3 lg:py-1 mt-2 border border-gray-300 rounded-md' placeholder="e.g +222 xxxx xxxx xxx" value={formValues.phone} onChange={handleChange} />
+                                    <input type="tel" id="phone" name="phone" className='w-full px-4 py-3 lg:py-1 mt-2 border border-gray-300 rounded-md' placeholder="e.g +222 xxxx xxxx xxx" onChange={handleChange} />
                                     <small className="text-red-400" id='phone-error'></small>
                                 </div>
 
                                 <div className="flex flex-col field mb-2">
                                     <label htmlFor="institute" className="font-semibold text-base text-gray-700 lg:text-sm">Institute: <span className="text-red-400">*</span></label>
-                                    <input type="text" id="institute" name="institute" className='w-full px-4 py-3 lg:py-1 mt-2 border border-gray-300 rounded-md' placeholder="Your Institute" value={formValues.institute} onChange={handleChange} />
+                                    <input type="text" id="institute" name="institute" className='w-full px-4 py-3 lg:py-1 mt-2 border border-gray-300 rounded-md' placeholder="Your Institute" onChange={handleChange} />
                                     <small className="text-red-400" id='institute-error'></small>
                                 </div>
 
                                 <div className="flex flex-col field mb-2">
                                     <label htmlFor="course" className="font-semibold text-base text-gray-700 lg:text-sm">Course and Specialization: <span className="text-red-400">*</span></label>
-                                    <input type="text" id="course" name="course" className='w-full px-4 py-3 lg:py-1 mt-2 border border-gray-300 rounded-md' placeholder="e.g Computer Science" value={formValues.course} onChange={handleChange} />
+                                    <input type="text" id="course" name="course" className='w-full px-4 py-3 lg:py-1 mt-2 border border-gray-300 rounded-md' placeholder="e.g Computer Science" onChange={handleChange} />
                                     <small className="text-red-400" id='course-error'></small>
                                 </div>
 
                                 <div className="flex flex-col field mb-2">
                                     <label htmlFor="domain" className="font-semibold text-base text-gray-700 lg:text-sm">Which position(s) are you interested in?<span className="text-red-400">*</span></label>
-                                    <select title="Domain" name="domain" className='w-full px-4 py-3 lg:py-1 mt-2 border border-gray-300 rounded-md' id="domain" value={formValues.domain} onChange={handleChange}>
+                                    <select title="Domain" name="domain" className='w-full px-4 py-3 lg:py-1 mt-2 border border-gray-300 rounded-md' id="domain" onChange={handleChange}>
                                         <option value="">Domains</option>
                                         <option value="Web Developer">Web Developer</option>
                                         <option value="Software Developer">Software Developer</option>
@@ -244,19 +253,19 @@ const ApplicationForm: React.FC = () => {
 
                                 <div className="flex flex-col field mb-2">
                                     <label htmlFor="goals" className="font-semibold text-base text-gray-700 lg:text-sm">How do you see your career goals aligning with the opportunities at TechDice? <span className="text-red-400">*</span></label>
-                                    <textarea id="goals" className='w-full px-4 py-3 lg:py-1 mt-2 border border-gray-300 rounded-md' name="goals" rows={2} cols={40} value={formValues.goals} onChange={handleChange}></textarea>
+                                    <textarea id="goals" className='w-full px-4 py-3 lg:py-1 mt-2 border border-gray-300 rounded-md' name="goals" rows={2} cols={40} onChange={handleChange}></textarea>
                                     <small className="text-red-400" id='goals-error'></small>
                                 </div>
 
                                 <div className="flex flex-col field mb-2">
                                     <label htmlFor="unique_skill" className="font-semibold text-base text-gray-700 lg:text-sm">What unique qualities or skills do you bring that would be an asset to our company?<span className="text-red-400">*</span></label>
-                                    <textarea id="unique_skill" className='w-full px-4 py-3 lg:py-1 mt-2 border border-gray-300 rounded-md' name="unique_skill" rows={2} cols={40} value={formValues.unique_skill} onChange={handleChange}></textarea>
+                                    <textarea id="unique_skill" className='w-full px-4 py-3 lg:py-1 mt-2 border border-gray-300 rounded-md' name="unique_skill" rows={2} cols={40} onChange={handleChange}></textarea>
                                     <small className="text-red-400" id='unique_skill-error'></small>
                                 </div>
 
                                 <div className="flex flex-col field mb-2">
                                     <label htmlFor="company_project" className="font-semibold text-base text-gray-700 lg:text-sm">Describe a specific project or initiative at our company that excites you and why?<span className="text-red-400">*</span></label>
-                                    <textarea id="company_project" className='w-full px-4 py-3 lg:py-1 mt-2 border border-gray-300 rounded-md' name="company_project" rows={2} cols={40} value={formValues.company_project} onChange={handleChange}></textarea>
+                                    <textarea id="company_project" className='w-full px-4 py-3 lg:py-1 mt-2 border border-gray-300 rounded-md' name="company_project" rows={2} cols={40} onChange={handleChange}></textarea>
                                     <small className="text-red-400" id='company_project-error'></small>
                                 </div>
 
