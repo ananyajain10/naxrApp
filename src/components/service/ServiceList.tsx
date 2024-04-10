@@ -140,10 +140,10 @@ const Services = () => {
                 loading ? <div> Loading...</div> : services.map((service) => (
                     <div key={service.attributes.id + service.attributes.name} className='flex gap-4 rounded-lg shadow-lg m-2'>
                         <div className="flex items-center m-2">
-                            <div className="mr-4">
-                                <img src={service.attributes.image_url} alt={service.attributes.name} class="w-20 h-20 rounded-full shadow-lg" />
+                            <div className="mr-4 w-[30%]">
+                                <img src={service.attributes.image_url} alt={service.attributes.name} class="w-full h-[150px] rounded-full shadow-lg" />
                             </div>
-                            <div>
+                            <div className=" w-[70%]">
                                 <h1 className="text-2xl font-bold text-gray-800 mb-2">{service.attributes.name}</h1>
                                 <p className="text-gray-600 mb-4">{service.attributes.description}</p>
                                 <div className="flex items-center">
