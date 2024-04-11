@@ -4,6 +4,11 @@ import { useDispatch,  useSelector, Provider  } from "react-redux";
 import { ToastContainer, toast } from 'react-toastify';
 import store from '../../redux/store';
 import '../../../src/app/globals.css';
+import "primereact/resources/themes/saga-blue/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
+
+import { Editor } from 'primereact/editor';
 
 
 const AddService = () => {
@@ -19,6 +24,7 @@ const AddService = () => {
         icon: null
     })
 
+
     
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -28,8 +34,7 @@ const AddService = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(service);
-
+        
         const allInputHasValue = Object.entries(service).every(([key, value]) => {
             const message = document.getElementById(`service_${key}-error`);
             if (value === '' || value === 0) {
@@ -51,12 +56,12 @@ const AddService = () => {
             if (service.icon) {
                 formData.append('service[icon]', e.target.icon.files[0]);
             }
-            console.log(formData)
             try {
                 const response = await dispatch(createService(formData));
+                e.target.reset();
                 await dispatch(fetchServices(formData));
 
-                console.log(response);
+
                 toast.success('Service added successfully');
             } catch (error) {
                 console.error('Error adding service:', error);
@@ -70,7 +75,7 @@ const AddService = () => {
     return (
         <>
         <ToastContainer />
-            <form className='w-75 flex flex-wrap flex space-y-1 gap-2 m-auto p-5' ref={formRef} onSubmit={(e) => handleSubmit(e)}>
+            <form className='w-50 flex flex-wrap flex-col space-y-1 gap-2 m-auto p-5 rounded-lg' ref={formRef} onSubmit={(e) => handleSubmit(e)}>
                 <label htmlFor='name'>
                     Name:
                     <input
@@ -99,15 +104,10 @@ const AddService = () => {
                 </label>
                 <label htmlFor='description'>
                     Description:
-                    <textarea
-                        className='border rounded-md p-1 w-full'
-                        id='description'
-                        name="description"
-                        onChange={(e) => setService({ ...service, description: e.target.value })}
-                        placeholder='Service Description..'
-                    />
+                    <Editor style={{ height: '320px' }} onTextChange={(e) => setService({ ...service, description: e.htmlValue })} />
                     <small className='text-rose-500' id='service_description-error'></small>
                 </label>
+
                 <label htmlFor='vacancy'>
                     Vacancy:
                     <input
