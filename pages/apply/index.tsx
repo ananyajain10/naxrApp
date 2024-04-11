@@ -28,7 +28,6 @@ interface FormValues {
     resume: File | null;
 }
 
-
 const SubmissionSuccess: React.FC = () => {
     return (
         <div className="p-5 min-h-screen z-100 flex flex-col justify-center items-center">
