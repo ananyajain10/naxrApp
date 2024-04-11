@@ -16,10 +16,12 @@ import ServiceList from "@/components/service/ServiceList";
 import ApplicationList from "@/components/application/ApplicationList";
 import { useDispatch, Provider } from "react-redux";
 import store from '../../src/redux/store';
+import ReactModal from 'react-modal';
 
 const Board = () => {
     const [currentPage, setCurrentPage] = useState('Applications');
     const [addService, setAddService] = useState(false);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
     const loggedIn = Cookies.get('admin_token');
     const dispatch = useDispatch();
 
@@ -28,13 +30,33 @@ const Board = () => {
             case 'Applications':
                 return <><div ><ApplicationList /></div></>;
             case 'Services':
-                return <><div className="text-center text-2xl font-bold m-2">Services</div><div> <button
-                    type="button"
-                    onClick={() => setAddService(!addService)}
-                    className="bg-[#dddddd] p-2 rounded-md m-2"
-                >
-                    Add Service
-                </button><ServiceList /></div></>;
+                return <>
+                    <div className="text-center text-2xl font-bold m-2">
+                        Services
+                    </div>
+                    <div>
+                        <ServiceList />
+                        <div>
+                            <button type="button" className=" border border-gray-400 hover:bg-gray-800 hover:text-white px-4 py-2 rounded-md transition-colors duration-300" onClick={() => setModalIsOpen(true)}>Add Service</button>
+                            <ReactModal
+                                isOpen={modalIsOpen}
+                                onRequestClose={() => setModalIsOpen(false)}
+                                contentLabel="Service Form"
+                            >
+                            <button
+                                name="close"
+                                type="button"
+                                className="absolute top-0 right-0 m-4 p-2 text-white bg-red-500 rounded-full hover:bg-red-600 focus:outline-none" 
+                                onClick={() => setModalIsOpen(false)}
+                            >
+                                Close
+                            </button>
+                                <AddService />
+
+                            </ReactModal>
+                        </div>
+                    </div>
+                </>;
             case 'AboutUs':
                 return <div className="text-center text-2xl font-bold m-2">About us</div>;
             case 'Careers':
@@ -93,7 +115,7 @@ const Board = () => {
                     <nav className="mt-[110px]">
                         <span className="text-left">Contents</span>
                         <ul className="mt-4">
-                        <li
+                            <li
                                 className={`flex m-3 p-2 rounded-md hover:bg-gray-200 items-center gap-2 cursor-pointer ${currentPage === 'Applications' ? 'bg-gray-500 text-white' : ''
                                     }`}
                                 onClick={() => setCurrentPage('Applications')}
@@ -114,7 +136,7 @@ const Board = () => {
                             >
                                 <FaInfoCircle /> <p>About us</p>
                             </li>
-                            
+
                             <li
                                 className={`flex m-3 p-2 rounded-md hover:bg-gray-200 items-center gap-2 cursor-pointer ${currentPage === 'Careers' ? 'bg-gray-500 text-white' : ''
                                     }`}
@@ -122,7 +144,7 @@ const Board = () => {
                             >
                                 <IoPeople /> <p>Career</p>
                             </li>
-                            
+
                             <li
                                 className={`flex m-3 p-2 rounded-md hover:bg-gray-200 items-center gap-2 cursor-pointer ${currentPage === 'Product' ? 'bg-gray-500 text-white' : ''
                                     }`}
@@ -149,7 +171,7 @@ const Board = () => {
                                 Logout
                             </button>
                         </div>
-                        {addService && <AddService />}
+                                                
                     </div>
                     <main className="">{renderPage()}</main>
                 </section>
