@@ -1,9 +1,16 @@
 import { useDispatch, useSelector, Provider } from "react-redux";
 import { fetchServices, deleteService, updateService } from "../../redux/actions/serviceSlice";
 import store from '../../redux/store';
+import Image from "next/image";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import "primereact/resources/themes/saga-blue/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
+import ReactModal from "react-modal";
+
+import { Editor } from 'primereact/editor';
 
 
 const ServiceUpdateForm = ({ service }) => {
@@ -60,39 +67,41 @@ const ServiceUpdateForm = ({ service }) => {
     }
 
     return (
-        <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-6 max-w-lg mx-auto">
-    <div className="flex flex-col">
-        <label htmlFor="name" className="text-lg font-semibold mb-1">Name</label>
-        <input type="text" name="name" value={updatedService.name} onChange={(e) => setUpdatedService({ ...updatedService, name: e.target.value })} className="border rounded-md py-2 px-3 text-lg focus:outline-none focus:border-blue-500" />
-        <span id="service_name-error" className="text-red-500"></span>
-    </div>
+        <div className="w-75">
+            <form ref={formRef} onSubmit={handleSubmit} className="w-full flex flex-wrap flex-col space-y-1 gap-2 m-auto p-5 rounded-lg">
+                <div className="flex flex-col">
+                    <label htmlFor="name" className="text-lg font-semibold mb-1">Name</label>
+                    <input type="text" name="name" placeholder="name" value={updatedService.name} onChange={(e) => setUpdatedService({ ...updatedService, name: e.target.value })} className="border rounded-md py-2 px-3 text-lg focus:outline-none focus:border-blue-500" />
+                    <span id="service_name-error" className="text-red-500"></span>
+                </div>
 
-    <div className="flex flex-col">
-        <label htmlFor="duration" className="text-lg font-semibold mb-1">Duration</label>
-        <input type="number" name="duration" value={updatedService.duration} onChange={(e) => setUpdatedService({ ...updatedService, duration: parseInt(e.target.value) })} className="border rounded-md py-2 px-3 text-lg focus:outline-none focus:border-blue-500" />
-        <span id="service_duration-error" className="text-red-500"></span>
-    </div>
+                <div className="flex flex-col">
+                    <label htmlFor="duration" className="text-lg font-semibold mb-1">Duration</label>
+                    <input type="number" name="duration" placeholder="Number" value={updatedService.duration} onChange={(e) => setUpdatedService({ ...updatedService, duration: parseInt(e.target.value) })} className="border rounded-md py-2 px-3 text-lg focus:outline-none focus:border-blue-500" />
+                    <span id="service_duration-error" className="text-red-500"></span>
+                </div>
 
-    <div className="flex flex-col">
-        <label htmlFor="description" className="text-lg font-semibold mb-1">Description</label>
-        <textarea name="description" value={updatedService.description} onChange={(e) => setUpdatedService({ ...updatedService, description: e.target.value })} className="border rounded-md py-2 px-3 text-lg h-24 focus:outline-none focus:border-blue-500"></textarea>
-        <span id="service_description-error" className="text-red-500"></span>
-    </div>
+                <div className="flex flex-col">
+                    <label htmlFor="description" className="text-lg font-semibold mb-1">Description</label>
+                    <Editor style={{ height: '320px' }} value={updatedService.description} onTextChange={(e) => setUpdatedService({ ...updatedService, description: e.htmlValue })} />
+                    <span id="service_description-error" className="text-red-500"></span>
+                </div>
 
-    <div className="flex flex-col">
-        <label htmlFor="vacancy" className="text-lg font-semibold mb-1">Vacancy</label>
-        <input type="number" name="vacancy" value={updatedService.vacancy} onChange={(e) => setUpdatedService({ ...updatedService, vacancy: parseInt(e.target.value) })} className="border rounded-md py-2 px-3 text-lg focus:outline-none focus:border-blue-500" />
-        <span id="service_vacancy-error" className="text-red-500"></span>
-    </div>
+                <div className="flex flex-col">
+                    <label htmlFor="vacancy" className="text-lg font-semibold mb-1">Vacancy</label>
+                    <input type="number" name="vacancy" value={updatedService.vacancy} placeholder="Vacancy" onChange={(e) => setUpdatedService({ ...updatedService, vacancy: parseInt(e.target.value) })} className="border rounded-md py-2 px-3 text-lg focus:outline-none focus:border-blue-500" />
+                    <span id="service_vacancy-error" className="text-red-500"></span>
+                </div>
 
-    <div className="flex flex-col">
-        <label htmlFor="icon" className="text-lg font-semibold mb-1">Icon</label>
-        <input type="file" name="icon" onChange={handleFileChange} className="py-2 px-3 text-lg" />
-        <span id="service_icon-error" className="text-red-500"></span>
-    </div>
+                <div className="flex flex-col">
+                    <label htmlFor="icon" className="text-lg font-semibold mb-1">Icon</label>
+                    <input type="file" name="icon" placeholder="Icon" onChange={handleFileChange} className="py-2 px-3 text-lg" />
+                    <span id="service_icon-error" className="text-red-500"></span>
+                </div>
 
-    <button type="submit" className="bg-blue-500 text-white py-3 rounded-md text-lg font-semibold hover:bg-blue-600 transition duration-300 ease-in-out">Update</button>
-</form>
+                <button type="submit" className="bg-blue-500 text-white py-3 rounded-md text-lg font-semibold hover:bg-blue-600 transition duration-300 ease-in-out">Update</button>
+            </form>
+        </div>
 
     )
 
@@ -134,14 +143,31 @@ const Services = () => {
 
     return (
         <>
+            <ReactModal
+                isOpen={showUpdateForm}
+                onRequestClose={() => setShowUpdateForm(false)}
+                contentLabel="Service Form"
+            >
+                <button
+                    name="close"
+                    type="button"
+                    className="absolute top-0 right-0 m-4 p-2 text-white bg-red-500 rounded-full hover:bg-red-600 focus:outline-none"
+                    onClick={() => setShowUpdateForm(false)}
+                >
+                    Close
+                </button>
+
+                <ServiceUpdateForm service={serviceToUpdate} />
+
+            </ReactModal>
             <ToastContainer />
-            {showUpdateForm && <ServiceUpdateForm service={serviceToUpdate} />}
             {
                 loading ? <div> Loading...</div> : services.map((service) => (
                     <div key={service.attributes.id + service.attributes.name} className='flex gap-4 rounded-lg shadow-lg m-2'>
+
                         <div className="flex items-center m-2">
                             <div className="mr-4 w-[30%]">
-                                <img src={service.attributes.image_url} alt={service.attributes.name} class="w-full h-[150px] rounded-full shadow-lg" />
+                                <Image src={service.attributes.image_url} alt={service.attributes.name} width={500} height={500} className="w-full h-[150px] rounded-full shadow-lg" />
                             </div>
                             <div className=" w-[70%]">
                                 <h1 className="text-2xl font-bold text-gray-800 mb-2">{service.attributes.name}</h1>
