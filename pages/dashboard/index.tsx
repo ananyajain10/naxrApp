@@ -14,6 +14,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { logoutAdmin } from '../../src/redux/actions/authSlice';
 import ServiceList from "@/components/service/ServiceList";
 import ApplicationList from "@/components/application/ApplicationList";
+import FeedbackList from "@/components/feedback/FeedbackList";
+
 import { useDispatch, Provider } from "react-redux";
 import store from '../../src/redux/store';
 import ReactModal from 'react-modal';
@@ -59,8 +61,8 @@ const Board = () => {
                 </>;
             case 'AboutUs':
                 return <div className="text-center text-2xl font-bold m-2">About us</div>;
-            case 'Careers':
-                return <div className="text-center text-2xl font-bold m-2">Careers</div>;
+            case 'Feedbacks':
+                return <><div><FeedbackList /></div></>;
             case 'Product':
                 return <div className="text-center text-2xl font-bold m-2">Product</div>;
             case 'Layout':
@@ -138,11 +140,11 @@ const Board = () => {
                             </li>
 
                             <li
-                                className={`flex m-3 p-2 rounded-md hover:bg-gray-200 items-center gap-2 cursor-pointer ${currentPage === 'Careers' ? 'bg-gray-500 text-white' : ''
+                                className={`flex m-3 p-2 rounded-md hover:bg-gray-200 items-center gap-2 cursor-pointer ${currentPage === 'Feedbacks' ? 'bg-gray-500 text-white' : ''
                                     }`}
-                                onClick={() => setCurrentPage('Careers')}
+                                onClick={() => setCurrentPage('Feedbacks')}
                             >
-                                <IoPeople /> <p>Career</p>
+                                <IoPeople /> <p>Feedbacks</p>
                             </li>
 
                             <li
