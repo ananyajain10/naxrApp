@@ -1,8 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import axios from 'axios';
-import Cookies from 'js-cookie';
-
 const BASE_URL = 'http://127.0.0.1:3000/api/v1/feedbacks';
 
 interface Feedback {
@@ -25,22 +22,40 @@ export const fetchFeedbacks = createAsyncThunk(
 
 export const createFeedback = createAsyncThunk(
     'feedback/createFeedback',
-    async (formData: FormData) => {
-        console.log(formData);
+    async (feedback: Feedback) => {
+        const feedbackObj = {
+            feedback: {
+                name: feedback.name,
+                email: feedback.email,
+                message: feedback.message,
+            },
+        };
+
+        console.log('Sending feedback:', feedbackObj);
 
         try {
             const response = await fetch(`${BASE_URL}`, {
                 method: 'POST',
-                body: formData
-            })
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(feedbackObj),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to create feedback');
+            }
+
             const data = await response.json();
-            console.log(data)
-            return data
+            console.log('Received response:', data);
+            return data;
         } catch (error) {
+            console.error('Error creating feedback:', error);
             throw new Error('Error adding service: ' + error);
         }
     }
-)
+);
+
 
 export const deleteFeedback = createAsyncThunk(
     'feedback/deleteFeedback',
