@@ -28,10 +28,11 @@ const Footer = (props: Props) => {
             <div className="mb-5">
               <h4 className="text-2xl pb-4 text-white">Quick Links</h4>
               <ul className="text-gray-500 ">
-            <span className="hover:text-white transition-all duration-75 ease-in flex gap-2">  <FaAngleRight /> <Link href="/" className="pb-4">Home</Link> <br /> </span>
-             <span className="hover:text-white transition-all duration-75 ease-in flex gap-2"> <FaAngleRight /> <Link href="/about" className="pb-4">About</Link> <br /> </span>
-             <span className="hover:text-white transition-all duration-75 ease-in flex gap-2"> <FaAngleRight /> <Link href="/services" className="pb-4">Services</Link> <br /> </span>
-           <span className="hover:text-white transition-all duration-75 ease-in flex gap-2">   <FaAngleRight /> <Link href="/contact" className="pb-4">Contact</Link> <br /> </span>
+            <span className="hover:text-white transition-all duration-75 ease-in flex gap-2 items-center">  <FaAngleRight /> <Link href="/" className="">Home</Link> <br /> </span>
+             <span className="hover:text-white transition-all duration-75 ease-in flex gap-2 items-center"> <FaAngleRight /> <Link href="/about" className="">About</Link> <br /> </span>
+             <span className="hover:text-white transition-all duration-75 ease-in flex gap-2 items-center"> <FaAngleRight /> <Link href="/services" className="">Services</Link> <br /> </span>
+           <span className="hover:text-white transition-all duration-75 ease-in flex gap-2 items-center">   <FaAngleRight /> <Link href="/contact" className="">Contact</Link> <br /> </span>
+           <span className="hover:text-white transition-all duration-75 ease-in flex gap-2 items-center">   <FaAngleRight /> <Link href="/apply" className="">Join Us</Link> <br /> </span>
               </ul>
             </div>
             <div className="mb-5">
@@ -45,11 +46,11 @@ const Footer = (props: Props) => {
             </div>
             <div className="mb-5">
               <h4 className="text-2xl pb-4 text-white">Follow Us</h4>
-              <ul className="text-gray-500 ">
-           <span className="hover:text-white transition-all duration-75 ease-in flex gap-2 py-2">   <FaFacebook /> <Link href="/">Facebook</Link> <br /> </span>
-           <span className="hover:text-white transition-all duration-75 ease-in flex gap-2 py-2">   <FaTwitter /> <Link href="/">Twitter</Link> <br /> </span>
-           <span className="hover:text-white transition-all duration-75 ease-in flex gap-2 py-2">   <FaInstagram /> <Link href="/">Instagram</Link> <br /> </span>
-            <span className="hover:text-white transition-all duration-75 ease-in flex gap-2 py-2">  <FaLinkedin /> <Link href="/">Linkedin</Link> <br /> </span>
+              <ul className="text-gray-500 flex flex-col space-y-4">
+           <span className="hover:text-white transition-all duration-75 ease-in flex gap-2 py-2 m-3">   <FaFacebook /> <Link href="/">Facebook</Link> <br /> </span>
+           <span className="hover:text-white transition-all duration-75 ease-in flex gap-2 py-2 m-3">   <FaTwitter /> <Link href="/">Twitter</Link> <br /> </span>
+           <span className="hover:text-white transition-all duration-75 ease-in flex gap-2 py-2 m-3">   <FaInstagram /> <Link href="/">Instagram</Link> <br /> </span>
+            <span className="hover:text-white transition-all duration-75 ease-in flex gap-2 py-2 m-3">  <FaLinkedin /> <Link href="/">Linkedin</Link> <br /> </span>
             </ul>
             </div>
           </div>

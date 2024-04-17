@@ -27,32 +27,25 @@ export const fetchServices = createAsyncThunk(
 
 export const createService = createAsyncThunk(
     'service/createService',
-    async (service: Service) => {
+    async (formData: FormData) => {
+        console.log(formData);
 
-        const serviceObject = {
-            service: {
-                name: service.name,
-                description: service.description,
-                icon: service.icon,
-                duration: Number(service.duration),
-                vacancy: Number(service.vacancy)
-            }
+        try {
+            const response = await fetch(`${BASE_URL}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': Cookies.get('admin_token')
+                },
+                body: formData
+            })
+            const data = await response.json();
+            console.log(data)
+            return data
+        } catch (error) {
+            throw new Error('Error adding service: ' + error);
         }
-
-        const response = await fetch(`${BASE_URL}`, {
-            method: 'Post',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': Cookies.get('admin_token')
-            },
-            body: JSON.stringify(serviceObject)
-        })
-        const data = await response.json();
-        console.log(data)
-        return data
     }
 )
-
 
 export const deleteService = createAsyncThunk(
     'service/deleteService',
@@ -70,23 +63,15 @@ export const deleteService = createAsyncThunk(
 
 export const updateService = createAsyncThunk(
     'service/updateService',
-    async (service: Service, serviceId) => {
-        const serviceObject = {
-            service: {
-                name: service.name,
-                description: service.description,
-                icon: service.icon,
-                duration: service.duration,
-                vacancy: service.vacancy
-            }
-        }
-        const response = await fetch(`${BASE_URL}/${serviceId}`, {
-            method: 'Put',
+    async ({ formData, id }: { formData: FormData; id: string }, { getState }) => {
+       
+        console.log(id, formData)
+        const response = await fetch(`${BASE_URL}/${id}`, {
+            method: 'PUT',
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': Cookies.get('admin_token')
             },
-            body: JSON.stringify(serviceObject)
+            body: formData
         })
         const data = await response.json();
         console.log(data)
@@ -108,7 +93,7 @@ export const serviceSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-             .addCase(fetchServices.pending, (state) => {
+            .addCase(fetchServices.pending, (state) => {
                 state.loading = true
                 state.status = 'loading'
             })
@@ -129,7 +114,6 @@ export const serviceSlice = createSlice({
             .addCase(createService.fulfilled, (state, action) => {
                 state.loading = false
                 state.status = 'succeeded'
-                state.services = action.payload
             })
             .addCase(createService.rejected, (state, action) => {
                 state.loading = false
@@ -143,7 +127,7 @@ export const serviceSlice = createSlice({
             .addCase(deleteService.fulfilled, (state, action) => {
                 state.loading = false
                 state.status = 'succeeded'
-                state.services = state.services.filter((service) => service.id !== action.payload )
+                state.services = state.services.filter((service) => service.attributes.id !== action.payload)
             })
             .addCase(deleteService.rejected, (state, action) => {
                 state.loading = false
@@ -152,6 +136,5 @@ export const serviceSlice = createSlice({
             })
     }
 })
-
 
 export default serviceSlice.reducer;

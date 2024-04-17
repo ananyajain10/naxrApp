@@ -1,26 +1,40 @@
-import { createService } from "../../redux/actions/serviceSlice";
-import { useState, useRef } from "react";
+import { createService, fetchServices } from "../../redux/actions/serviceSlice";
+import { useState, useRef, FormEvent, ChangeEvent } from "react";
 import { useDispatch,  useSelector, Provider  } from "react-redux";
 import { ToastContainer, toast } from 'react-toastify';
 import store from '../../redux/store';
+import '../../../src/app/globals.css';
+import "primereact/resources/themes/saga-blue/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
+
+import { Editor } from 'primereact/editor';
+
 
 const AddService = () => {
 
     const dispatch = useDispatch();
-    const formRef = useRef(null);
+    const formRef = useRef<HTMLFormElement>(null);
 
     const [service, setService] = useState({
         name: '',
         duration: 0,
         description: '',
         vacancy: 0,
-        icon: ''
+        icon: null
     })
+
+
+    
+    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            setService({ ...service, icon: e.target.files[0] });
+        }
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(service);
-
+        
         const allInputHasValue = Object.entries(service).every(([key, value]) => {
             const message = document.getElementById(`service_${key}-error`);
             if (value === '' || value === 0) {
@@ -32,49 +46,55 @@ const AddService = () => {
         });
 
         if (allInputHasValue) {
-            try {
-
-                const response = await dispatch(createService(service))
-                console.log(response);
-                // if (!response.payload.status.errors) {
-                //     toast.success('Sign up successful');
-                //     router.push('/');
-                // } else {
-                //     toast.error(response.payload.status.errors[0])
-                // }
+            const formData = new FormData();
 
 
-            } catch (error) {
-                console.log('Error logging in:', error);
-                toast.error('An error occurred while logging in. Please try again later.');
+            formData.append('service[name]', service.name);
+            formData.append('service[duration]', service.duration.toString());
+            formData.append('service[description]', service.description);
+            formData.append('service[vacancy]', service.vacancy.toString());
+            if (service.icon) {
+                formData.append('service[icon]', e.target.icon.files[0]);
             }
+            try {
+                const response = await dispatch(createService(formData));
+                e.target.reset();
+                await dispatch(fetchServices(formData));
 
+
+                toast.success('Service added successfully');
+            } catch (error) {
+                console.error('Error adding service:', error);
+                toast.error('An error occurred while adding the service. Please try again later.');
+            }
         }
+
+        
     }
 
     return (
         <>
         <ToastContainer />
-            <form className='w-75 flex flex-wrap flex space-y-1 gap-2 m-auto p-5' onSubmit={(e) => handleSubmit(e)}>
-                <label htmlFor='service_name'>
+            <form className='w-50 flex flex-wrap flex-col space-y-1 gap-2 m-auto p-5 rounded-lg' ref={formRef} onSubmit={(e) => handleSubmit(e)}>
+                <label htmlFor='name'>
                     Name:
                     <input
                         className='border rounded-md p-1 w-full'
-                        id='service_name'
+                        id='name'
                         type="text"
-                        name="service_name"
+                        name="name"
                         onChange={(e) => setService({ ...service, name: e.target.value })}
                         placeholder='Service Name..'
                     />
                     <small className='text-rose-500' id='service_name-error'></small>
                 </label>
-                <label htmlFor='service_duration'>
+                <label htmlFor='duration'>
                     Duration:
                     <input
                         className='border rounded-md p-1 w-full'
-                        id='service_duration'
+                        id='duration'
                         type="number"
-                        name="service_duration"
+                        name="duration"
                         onChange={(e) => {
                             setService({ ...service, duration: Number(e.target.value) })
                         }}
@@ -82,24 +102,19 @@ const AddService = () => {
                     />
                     <small className='text-rose-500' id='service_duration-error'></small>
                 </label>
-                <label htmlFor='service_description'>
+                <label htmlFor='description'>
                     Description:
-                    <textarea
-                        className='border rounded-md p-1 w-full'
-                        id='service_description'
-                        name="service_description"
-                        onChange={(e) => setService({ ...service, description: e.target.value })}
-                        placeholder='Service Description..'
-                    />
+                    <Editor style={{ height: '320px' }} onTextChange={(e) => setService({ ...service, description: e.htmlValue })} />
                     <small className='text-rose-500' id='service_description-error'></small>
                 </label>
-                <label htmlFor='service_vacancy'>
+
+                <label htmlFor='vacancy'>
                     Vacancy:
                     <input
                         className='border rounded-md p-1 w-full'
-                        id='service_vacancy'
+                        id='vacancy'
                         type="number"
-                        name="service_vacancy"
+                        name="vacancy"
                         onChange={(e) => {
                             setService({ ...service, vacancy: Number(e.target.value) })
                         }}
@@ -107,15 +122,15 @@ const AddService = () => {
                     />
                     <small className='text-rose-500' id='service_vacancy-error'></small>
                 </label>
-                <label htmlFor='service_icon'>
+                <label htmlFor='icon'>
                     Icon:
                     <input
                         className='border rounded-md p-1 w-full'
-                        id='service_icon'
+                        id='icon'
                         type="file"
-                        name="service_icon"
-                        onChange={(e) => { setService({ ...service, icon: e.target.value }) }}
-                        placeholder='Service Icon..'
+                        name="icon"
+                        onChange={(e) => handleFileChange(e)}
+                        accept="image/*"
                     />
                     <small className='text-rose-500' id='service_icon-error'></small>
                 </label>

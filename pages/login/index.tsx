@@ -9,6 +9,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import store from '../../src/redux/store';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Navbar from "@/components/Navbar";
+import Image from 'next/image';
+import Meet from '../../src/assets/images/meet.jpg';
 
 
 const Login = () => {
@@ -50,15 +53,25 @@ const Login = () => {
 
   return (
     <>
+    {loading ? <></> : <Navbar />}
     {loading && (
       <div className='flex flex-col absolute w-full h-full bg-white justify-center items-center'>
           <FidgetSpinner />
           <h4 className='font-bold'>Logging in ...</h4>
       </div>
   )}
-    <div className="flex p-5 flex-col justify-center h-[100vh] md:ml-inherit md:w-[50%] lg:w-[35%] ml-auto">
+    <div className=" p-4 flex p-5 flex-row justify-center lg:items-center h-[100vh] w-full ">
+    <div className="hidden lg:block xl:block">
+                <Image
+                        src={Meet}
+                        
+                        height={700}
+                        alt='Admin meeting'
+                        className="rounded-lg w-[80%] mt-[100px] ml-[50px]"
+                        />
+                </div>
       <form
-        className="p-5 flex flex-col lg:w-full space-y-4 shadow-2xl lg:align-right"
+        className="rounded-lg text-sm p-5 flex flex-col lg:w-[40%] lg:h-[60%] w-full space-y-4 md:ml-inherit md:w-[50%] ml-auto shadow-2xl mt-[40px] lg:align-right"
         onSubmit={(e) => handleSubmit(e)}
       >
          <ToastContainer />
@@ -91,9 +104,10 @@ const Login = () => {
           type="submit"
           value="Submit"
         />
+         <p className="text-center sm:w-full ] md:ml-auto mt-3 ">Already have an account? <Link href="/signup" className="text-blue-500 w-full">Sign Up</Link></p>
       </form>
 
-      <p className="text-center w-full mt-3">Don&apos;t have an account? <Link href="/signup" className="text-blue-500">Sign Up</Link></p>
+     
     </div>
     </>
     
