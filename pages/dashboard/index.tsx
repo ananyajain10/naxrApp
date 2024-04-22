@@ -16,7 +16,7 @@ import ServiceList from "@/components/service/ServiceList";
 import ApplicationList from "@/components/application/ApplicationList";
 import FeedbackList from "@/components/feedback/FeedbackList";
 
-import { useDispatch, Provider } from "react-redux";
+import { useDispatch, Provider, useSelector } from "react-redux";
 import store from '../../src/redux/store';
 import ReactModal from 'react-modal';
 
@@ -24,10 +24,14 @@ const Board = () => {
     const [currentPage, setCurrentPage] = useState('Applications');
     const [addService, setAddService] = useState(false);
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const admin = useSelector((state) => state.auth.admin);
     const loggedIn = Cookies.get('admin_token');
     const dispatch = useDispatch();
 
+    console.log(admin)
+
     const renderPage = () => {
+        
         switch (currentPage) {
             case 'Applications':
                 return <><div ><ApplicationList /></div></>;
@@ -102,18 +106,7 @@ const Board = () => {
                         />
                         <h1 className="mx-4">Tech-Dice</h1>
                     </span>
-                    <br />
-                    <span className="flex w-full items-center gap-2">
-                        <Image
-                            src={homebg}
-                            alt="homebg"
-                            className="rounded-2xl flex items-center z-20 "
-                            width={50}
-                            height={50}
-                        />
-                        <h1 className="">Daniel Ochuba</h1>
-                    </span>
-
+                   
                     <nav className="mt-[110px]">
                         <span className="text-left">Contents</span>
                         <ul className="mt-4">
@@ -131,14 +124,7 @@ const Board = () => {
                             >
                                 <MdMiscellaneousServices /> <p>Services </p>
                             </li>
-                            <li
-                                className={`flex m-3 p-2 rounded-md hover:bg-gray-200 items-center gap-2 cursor-pointer ${currentPage === 'AboutUs' ? 'bg-gray-500 text-white' : ''
-                                    }`}
-                                onClick={() => setCurrentPage('AboutUs')}
-                            >
-                                <FaInfoCircle /> <p>About us</p>
-                            </li>
-
+                            
                             <li
                                 className={`flex m-3 p-2 rounded-md hover:bg-gray-200 items-center gap-2 cursor-pointer ${currentPage === 'Feedbacks' ? 'bg-gray-500 text-white' : ''
                                     }`}
@@ -146,7 +132,13 @@ const Board = () => {
                             >
                                 <IoPeople /> <p>Feedbacks</p>
                             </li>
-
+                            <li
+                                className={`flex m-3 p-2 rounded-md hover:bg-gray-200 items-center gap-2 cursor-pointer ${currentPage === 'AboutUs' ? 'bg-gray-500 text-white' : ''
+                                    }`}
+                                onClick={() => setCurrentPage('AboutUs')}
+                            >
+                                <FaInfoCircle /> <p>About us</p>
+                            </li>
                             <li
                                 className={`flex m-3 p-2 rounded-md hover:bg-gray-200 items-center gap-2 cursor-pointer ${currentPage === 'Product' ? 'bg-gray-500 text-white' : ''
                                     }`}

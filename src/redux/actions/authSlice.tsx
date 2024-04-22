@@ -30,6 +30,7 @@ export const loginAdmin = createAsyncThunk(
          await Cookies.set('admin_token', response.headers.get('Authorization'), { expires: 1 })
 
         const data = await response.json();
+        console.log(data)
         return data;
     }
 )
@@ -47,7 +48,7 @@ export const logoutAdmin = createAsyncThunk(
 
         Cookies.remove('admin_token')
         const data = await response.json();
-        console.log(data)
+
         return data
     }
 )
@@ -113,7 +114,7 @@ export const authSlice = createSlice({
             .addCase(loginAdmin.fulfilled, (state, action) => {
                 state.loading = false
                 state.status = 'succeeded'
-                state.user = action.payload
+                state.admin = action.payload
             })
             .addCase(loginAdmin.rejected, (state, action) => {
                 state.loading = false
