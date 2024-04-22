@@ -40,8 +40,9 @@ const Login = () => {
           toast.error('Invalid email or password');
         } else {
             toast.success('Logged in successfully');
+            toast.success('Navigating to Dashboard');
             setTimeout(() => {
-              router.push('/');
+              router.push('/dashboard');
             }, 1000); 
         }
       } else {
@@ -104,7 +105,7 @@ const Login = () => {
           type="submit"
           value="Submit"
         />
-         <p className="text-center sm:w-full ] md:ml-auto mt-3 ">Already have an account? <Link href="/signup" className="text-blue-500 w-full">Sign Up</Link></p>
+         <p className="text-center sm:w-full ] md:ml-auto mt-3 ">Don&apos;t have an account? <Link href="/signup" className="text-blue-500 w-full">Sign Up</Link></p>
       </form>
 
      
