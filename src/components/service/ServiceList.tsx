@@ -162,34 +162,38 @@ const Services = () => {
             </ReactModal>
             <ToastContainer />
             {
-                loading ? <div> Loading...</div> : services.map((service) => (
-                    <div key={service.attributes.id + service.attributes.name} className='flex gap-4 rounded-lg shadow-lg m-2'>
+                loading ? <div> Loading...</div> : services.map((service) => {
+                    let unwrappedDescription = service.attributes.description.replace(/<\/?[^>]+(>|$)/g, '');
+                    return (
+                        <div key={service.attributes.id + service.attributes.name} className='flex gap-4 rounded-lg shadow-lg m-2'>
 
-                        <div className="flex items-center m-2">
-                            <div className="mr-4 w-[30%]">
-                                <Image src={service.attributes.image_url} alt={service.attributes.name} width={500} height={500} className="w-full h-[150px] rounded-full shadow-lg" />
-                            </div>
-                            <div className=" w-[70%]">
-                                <h1 className="text-2xl font-bold text-gray-800 mb-2">{service.attributes.name}</h1>
-                                <p className="text-gray-600 mb-4">{service.attributes.description}</p>
-                                <div className="flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM5 10a5 5 0 1110 0 5 5 0 01-10 0z" clip-rule="evenodd" />
-                                    </svg>
+                            <div className="flex items-center m-2">
+                                <div className="mr-4 w-[30%]">
+                                    <Image src={service.attributes.image_url} alt={service.attributes.name} width={500} height={500} className="w-full h-[150px] rounded-full shadow-lg" />
+                                </div>
+                                <div className=" w-[70%]">
+                                    <h1 className="text-2xl font-bold text-gray-800 mb-2">{service.attributes.name}</h1>
+                                    <p className="text-gray-600 mb-4">{unwrappedDescription}</p>
+                                    <div className="flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM5 10a5 5 0 1110 0 5 5 0 01-10 0z" clip-rule="evenodd" />
+                                        </svg>
 
-                                    <span className="text-sm text-gray-500 mr-4">{service.attributes.duration} months</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM5 10a5 5 0 1110 0 5 5 0 01-10 0z" clip-rule="evenodd" />
-                                    </svg>
-                                    <span className="text-sm text-gray-500 mr-4">{service.attributes.vacancy} slots left</span>
-                                    <button type="button" onClick={() => handleUpdate(service)} className="text-sm text-white bg-blue-500 hover:bg-blue-600 rounded-full px-4 py-2">Edit</button>
-                                    <button type="button" onClick={() => handleDelete(service.attributes.id)} className="text-sm text-white bg-red-500 hover:bg-red-600 rounded-full px-4 py-2 ml-2">Delete</button>
+                                        <span className="text-sm text-gray-500 mr-4">{service.attributes.duration} months</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM5 10a5 5 0 1110 0 5 5 0 01-10 0z" clip-rule="evenodd" />
+                                        </svg>
+                                        <span className="text-sm text-gray-500 mr-4">{service.attributes.vacancy} slots left</span>
+                                        <button type="button" onClick={() => handleUpdate(service)} className="text-sm text-white bg-blue-500 hover:bg-blue-600 rounded-full px-4 py-2">Edit</button>
+                                        <button type="button" onClick={() => handleDelete(service.attributes.id)} className="text-sm text-white bg-red-500 hover:bg-red-600 rounded-full px-4 py-2 ml-2">Delete</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                    </div>
-                ))
+                        </div>
+                    )
+                }
+                )
             }
         </>
     )
